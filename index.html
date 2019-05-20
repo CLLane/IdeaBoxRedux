@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IdeaBox</title>
+</head>
+<body>
+  <aside>
+    <h2>IdeaBox Redux</h3>
+    <div>
+      <p class="aside-labels">Filter Starred Ideas</p>
+      <button class="aside-button">Show Starred Ideas</button>
+    </div>
+    <div>
+      <p class="aside-labels">Filter by Quality</p>
+      <ul>
+        <li>Swill</li>
+        <li>Plausible</li>
+        <li>Genius</li>
+      </ul>
+      <form>
+        <label class="aside-labels">New Quality</label>
+        <input type="text">
+        <button class="aside-button">Add New Quality</button>
+      </form>
+    </div>
+  </aside>
+  <main>
+    <section class="input-section">
+      <form>
+        <label for="title-input">Title</label>
+        <input type="text" class="title-input" id="title-input">
+        <label for="body-input">Body</label>
+        <textarea id="body-input"></textarea>
+        <button class="save-button">Save</button>
+      </form>
+      <dir>
+        <button class="search-button">Search Img</button>
+        <input type="text" placeholder="Search ideas" class="search-input">
+      </dir>
+    </section>
+    <section class="card-section">
+      <p>You Have No Idea</p>
+      <article class="idea-card">
+        <div class="card-top">
+          <button class="star-button">Star Img</button>
+          <button class="delete-button">Delete</button>
+        </div>
+        <h3>Idea title</h3>
+        <p class="idea-body">Idea body</p>
+        <div class="card-bottom">
+          <button class="upvote-button">Upvote</button>
+          <p>Quality:<span>Swill</span></p>
+          <button class="downvote-button">Downvote</button>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
