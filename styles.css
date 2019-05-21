@@ -30,7 +30,13 @@ img{
 
 p {
       margin: 0% 0% 0% 0%;
+
 }
+
+button {
+  padding: 0;
+}
+
 
 .input-form {
     display: flex;
@@ -67,6 +73,11 @@ p {
     font-size: 22px;
     border-radius: 2.5px;
 }
+
+.save-button:hover {
+  background-color: #D14119;
+}
+
 .search-input-container {
     width: 100%;
     display: flex;
@@ -87,6 +98,14 @@ p {
     border-radius: 0px 2.5px 2.5px 0px;
 }
 
+.search-input::placeholder {
+  font-size: 18px;
+  font-weight: 200;
+  color: #1F1F3D;
+
+}
+
+
 .search-button {
     height: 40px;
     width: 40px;
@@ -94,6 +113,10 @@ p {
     border: none;
     margin: 0% 0% 0% 0%;
     border-radius: 2.5px 0px 0px 2.5px;
+}
+
+.search-button:hover {
+  background-color: #D14119;
 }
 
 .card-section {
@@ -106,23 +129,28 @@ p {
 }
 
 .idea-card  {
-  height: 210px;
-  width: 180px;
   background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 280px;
+  width: 30%;
 }
 
 .card-top {
   display: flex;
   justify-content: space-between;
   background-color: #1F1F3D;
+  height: 35px
 }
 
 .card-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin: 32% 0% 0% 0%;
+  align-items: center;
+  margin: 0% 0% 0% 0%;
   background-color: #A9AAD2;
+  height: 35px;
 }
 
 .delete-button {
@@ -138,13 +166,20 @@ p {
 .downvote-button {
   height: 25px;
   width: 25px;
+  padding: 0;
   border: none;
   background-color: #A9AAD2;
 }
 
+.quality-label {
+  padding-bottom: 3px;
+}
+
+
 .upvote-button {
   height: 25px;
   width: 25px;
+  padding: 0;
   border: none;
   background-color: #A9AAD2;
 }
@@ -156,8 +191,8 @@ html {
 
 
 aside {
-  height: 100vh;
   background-color: #1F1F3D;
+  height: 885px;
   width: 25%;
 }
 
