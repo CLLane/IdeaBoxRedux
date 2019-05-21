@@ -1,3 +1,5 @@
+
+'-styling
 * {
   box-sizing: border-box;
 }
@@ -5,6 +7,9 @@
 
 body {
   display: flex;
+  font-family: "Open Sans", sans-serif;
+  margin: 0px;
+
 }
 
 main {
@@ -136,4 +141,74 @@ p {
   width: 25px;
   border: none;
   background-color: #A9AAD2;
+
+html {
+  height: 100vh; 
+  margin: 0px;
+}
+
+
+aside {
+  height: 100vh;
+  background-color: #1F1F3D;\
+}
+
+h2 {
+  color: #FFFFFF;
+  padding-left: 20px;
+  font-size: 1.2em;
+}
+
+
+.aside-button {
+  border-color: #353567;
+  background-color: #5356A4;
+  color: #E9E9F3;
+  margin-left: 20px;
+  width: 85%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 40px;
+  border-radius: 2.5px;
+  font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.aside-labels {
+  color: #BFBFDD;
+  padding-left: 20px;
+  font-size: .8em;
+  font-weight: 300;
+
+}
+
+.starred-ideas {
+  border-top: 1px solid #5356A4;
+  border-bottom: 1px solid #5356A4;
+}
+
+.new-quality-input {
+  display: block;
+  margin-left: 20px;
+  margin-top: 5px;
+  width: 83%;
+  height: 30px;
+}
+
+ul {
+  color: #FFFFFF;
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+li:hover {
+  border-left: 10px solid #F58E72;
+  margin-left: -20px;
+  background-color: #D14119;
+  padding-left: 10px;
 }
