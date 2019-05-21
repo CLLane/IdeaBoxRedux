@@ -21,12 +21,10 @@ function saveFunction(e) {
 
 function instantiateIdeas() {
   var parsedArray = JSON.parse(localStorage.getItem('ideas array'));
-  console.log(parsedArray);
   parsedArray.forEach(function (arrayItem){
     new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
-    console.log(arrayItem);
   })
-
+  ideasArray = parsedArray;
 }
 
 instantiateIdeas();
@@ -36,8 +34,5 @@ instantiateIdeas();
 //   //take bodyInput.value and titleInput.value and place into card
 // }
 
-// function saveToLocalStorage() {
-//   //should this be a method invoked on the new Idea instance? 
-//   //how do we do this?
-// }
+
 
