@@ -20,6 +20,14 @@ textarea {
   border-width: 1px;
 }
 
+img{
+  height: 25px;
+}
+
+p {
+      margin: 0% 0% 0% 0%;
+}
+
 .input-form {
     display: flex;
     flex-direction: column;
@@ -90,4 +98,37 @@ textarea {
 .card-top {
   display: flex;
   justify-content: space-between;
+  background-color: #1F1F3D;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 32% 0% 0% 0%;
+  background-color: #A9AAD2;
+}
+
+.delete-button {
+  background-color: #1F1F3D;
+  border: none;
+}
+
+.star-button {
+  background-color: #1F1F3D;
+  border: none;
+}
+
+.downvote-button {
+  height: 25px;
+  width: 25px;
+  border: none;
+  background-color: #A9AAD2;
+}
+
+.upvote-button {
+  height: 25px;
+  width: 25px;
+  border: none;
+  background-color: #A9AAD2;
 }
