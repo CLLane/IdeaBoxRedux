@@ -1,5 +1,4 @@
 
-'-styling
 * {
   box-sizing: border-box;
 }
@@ -141,6 +140,7 @@ p {
   width: 25px;
   border: none;
   background-color: #A9AAD2;
+}
 
 html {
   height: 100vh; 
