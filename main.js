@@ -11,7 +11,6 @@ function saveFunction(e) {
   e.preventDefault();
   var uniqueId = Date.now();
   var ideaTest = new Idea(uniqueId, titleInput.value, bodyInput.value);
-  console.log(ideaTest);
   ideaTest.saveToLocalStorage();
   ideasArray.push(ideaTest);
   localStorage.setItem('ideas array', JSON.stringify(ideasArray));
@@ -21,10 +20,12 @@ function saveFunction(e) {
 
 function instantiateIdeas() {
   var parsedArray = JSON.parse(localStorage.getItem('ideas array'));
-  parsedArray.forEach(function (arrayItem){
-    new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
+  var newArray = parsedArray.map(function (arrayItem){
+    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
   })
+  console.log(newArray)
   ideasArray = parsedArray;
+
 }
 
 instantiateIdeas();
