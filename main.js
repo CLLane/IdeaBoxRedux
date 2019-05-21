@@ -3,8 +3,6 @@ var bodyInput = document.querySelector('#body-input');
 var saveButton = document.querySelector('#save-button');
 var ideasArray = [];
 
-// localStorage.setItem('ideas array', ideasArray);
-
 saveButton.addEventListener('click', saveFunction)
 
 function saveFunction(e) {
@@ -15,7 +13,7 @@ function saveFunction(e) {
   ideasArray.push(ideaTest);
   localStorage.setItem('ideas array', JSON.stringify(ideasArray));
   // populateNewCard(); 
-  // clearInputFields();
+  clearInputFields();
 }
 
 function instantiateIdeas() {
@@ -26,6 +24,11 @@ function instantiateIdeas() {
   console.log(newArray)
   ideasArray = parsedArray;
 
+}
+
+function clearInputFields() {
+  titleInput.value = '';
+  bodyInput.value = '';
 }
 
 instantiateIdeas();
