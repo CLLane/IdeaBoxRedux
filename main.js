@@ -9,11 +9,11 @@ saveButton.addEventListener('click', saveFunction)
 function saveFunction(e) {
   e.preventDefault();
   var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value);
-  newIdeaInstance.saveToLocalStorage();
+  newIdeaInstance.saveToStorage();
   ideasArray.push(newIdeaInstance);
+  generateCard(newIdeaInstance);
   localStorage.setItem('ideas array', JSON.stringify(ideasArray));
   clearInputFields();
-  abraCadabra();
 }
 
 function instantiateIdeas() {
@@ -54,9 +54,6 @@ titleInput.value === '' || bodyInput.value === '' ? saveButton.disabled = true: 
 function abraCadabra(){
 
 for (var i = 0; i < ideasArray.length; i++) {
-  console.log(ideasArray[i].name);
-
-
 
 var ideaCard =  `<article class="idea-card"> 
           <div class="card-top" data-id="${ideasArray[i].id}">
@@ -77,7 +74,24 @@ var ideaCard =  `<article class="idea-card">
   }
 }
 
+function generateCard(newIdeaObject) {
+  var ideaCard =  `<article class="idea-card"> 
+          <div class="card-top" data-id="${newIdeaObject.id}">
+          <button class="star-button"><img src="images/star.svg"></button>
+          <button class="delete-button"><img src="images/delete.svg"></button>
+        </div>
+        <h3>${newIdeaObject.title}</h3>
+        <p class="idea-body">${newIdeaObject.body}</p>
+        <div class="card-bottom">
+          <button class="upvote-button"><img src="images/upvote.svg" class="upvote-svg"></button>
+          <p class="quality-label">Quality:<span>Swill</span></p>
+          <button class="downvote-button"><img src="images/downvote.svg"></button>
+        </div>
+        </article>`
 
+        cardSection.insertAdjacentHTML('afterbegin', ideaCard);
+
+}
 
 
 abraCadabra()

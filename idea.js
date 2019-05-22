@@ -5,9 +5,19 @@ class Idea {
     this.body = body;
   }
 
-  saveToLocalStorage() {
-    var stringifiedIdea = JSON.stringify(this);
-    localStorage.setItem(this.id, stringifiedIdea);
-    
+  saveToStorage() {
+    localStorage.setItem(this.id, JSON.stringify(this));
+  }
+
+  deleteFromStorage(){
+
+  }
+
+  updateIdea() {
+
+  }
+
+  updateQuality() {
+
   }
 }
