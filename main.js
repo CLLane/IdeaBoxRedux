@@ -4,8 +4,6 @@ var saveButton = document.querySelector('#save-button');
 var cardSection = document.querySelector('#card-section')
 var ideasArray = [];
 
-localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-
 saveButton.addEventListener('click', saveFunction)
 
 function saveFunction(e) {
@@ -19,6 +17,9 @@ function saveFunction(e) {
 }
 
 function instantiateIdeas() {
+  if (localStorage.getItem('ideas array') === null){
+    return
+  }
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
     return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
   })
