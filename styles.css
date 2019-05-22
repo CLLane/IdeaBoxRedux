@@ -184,10 +184,12 @@ button {
 
 .card-section {
   width: 100%;
-  height: 500px;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-top: 30px;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
   background-color: #EAEAF4;
 }
 

@@ -13,7 +13,7 @@ function saveFunction(e) {
   ideasArray.push(newIdeaInstance);
   localStorage.setItem('ideas array', JSON.stringify(ideasArray));
   clearInputFields();
-  // populateNewCard(); 
+  abraCadabra();
 }
 
 function instantiateIdeas() {
@@ -58,7 +58,8 @@ for (var i = 0; i < ideasArray.length; i++) {
 
 
 
-var ideaCard =  `<div class="card-top" data-id="${ideasArray[i].id}">
+var ideaCard =  `<article class="idea-card"> 
+          <div class="card-top" data-id="${ideasArray[i].id}">
           <button class="star-button"><img src="images/star.svg"></button>
           <button class="delete-button"><img src="images/delete.svg"></button>
         </div>
@@ -68,7 +69,8 @@ var ideaCard =  `<div class="card-top" data-id="${ideasArray[i].id}">
           <button class="upvote-button"><img src="images/upvote.svg" class="upvote-svg"></button>
           <p class="quality-label">Quality:<span>Swill</span></p>
           <button class="downvote-button"><img src="images/downvote.svg"></button>
-        </div>`
+        </div>
+        </article>`
 
         cardSection.insertAdjacentHTML('afterbegin', ideaCard);
 
