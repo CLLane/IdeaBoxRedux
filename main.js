@@ -3,7 +3,7 @@ var bodyInput = document.querySelector('#body-input');
 var saveButton = document.querySelector('#save-button');
 var ideasArray = [];
 
-// localStorage.setItem('ideas array', ideasArray);
+localStorage.setItem('ideas array', ideasArray);
 
 saveButton.addEventListener('click', saveFunction)
 
@@ -29,7 +29,7 @@ function instantiateIdeas() {
 
 }
 
-instantiateIdeas();
+// instantiateIdeas();
 
 // function populateNewCard() {
 //   //insert adjacent HTML into card-section section
@@ -40,4 +40,34 @@ instantiateIdeas();
 //   //should this be a method invoked on the new Idea instance? 
 //   //how do we do this?
 // }
+
+
+
+
+
+
+
+
+
+
+
+//Disable Save Button unless all the inputs are filled///
+titleInput.addEventListener('keyup', enableSaveButton)
+bodyInput.addEventListener('keyup', enableSaveButton)
+
+function enableSaveButton() {
+    var inputFields =[
+    titleInput.value,
+    bodyInput.value
+    ];
+    for(var i = 0; i < inputFields.length; i++){
+        if (inputFields[i].length < 1) {
+            saveButton.disabled = true;
+            return;
+        } else {
+            saveButton.disabled = false;
+        };
+    };
+};
+
 

@@ -74,6 +74,10 @@ button {
     border-radius: 2.5px;
 }
 
+.save-button:disabled{
+  background-color: #5356A4 ;
+}
+
 .save-button:hover {
   background-color: #D14119;
 }
