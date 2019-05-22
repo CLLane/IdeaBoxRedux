@@ -7,23 +7,20 @@ saveButton.addEventListener('click', saveFunction)
 
 function saveFunction(e) {
   e.preventDefault();
-  var uniqueId = Date.now();
-  var ideaTest = new Idea(uniqueId, titleInput.value, bodyInput.value);
-  ideaTest.saveToLocalStorage();
-  ideasArray.push(ideaTest);
+  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value);
+  newIdeaInstance.saveToLocalStorage();
+  ideasArray.push(newIdeaInstance);
   localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-  // populateNewCard(); 
   clearInputFields();
+  // populateNewCard(); 
 }
 
 function instantiateIdeas() {
-  var parsedArray = JSON.parse(localStorage.getItem('ideas array'));
-  var newArray = parsedArray.map(function (arrayItem){
+  var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
     return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
   })
   console.log(newArray)
-  ideasArray = parsedArray;
-
+  ideasArray = newArray;
 }
 
 function clearInputFields() {
@@ -34,9 +31,7 @@ function clearInputFields() {
 instantiateIdeas();
 
 // function populateNewCard() {
-//   //insert adjacent HTML into card-section section
-//   //take bodyInput.value and titleInput.value and place into card
-// }
+
 
 
 
