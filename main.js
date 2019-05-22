@@ -16,8 +16,6 @@ function saveFunction(e) {
 }
 
 function instantiateIdeas() {
-  // var parsedArray = JSON.parse(localStorage.getItem('ideas array'));
-  // var newArray = parsedArray.map(function (arrayItem){
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
     return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
   })
@@ -33,9 +31,7 @@ function clearInputFields() {
 instantiateIdeas();
 
 // function populateNewCard() {
-//   //insert adjacent HTML into card-section section
-//   //take bodyInput.value and titleInput.value and place into card
-// }
+
 
 
 
