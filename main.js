@@ -111,9 +111,48 @@ function deleteCard(e){
     };
  };
 
+function getIndex() {
+  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+  ideasArray.indexOf()
+}
 
 
 
+function deleteCard(e){
+  if (e.target.className === 'delete-button'){
+    e.target.closest('.idea-card').remove();
+    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+    var cardIndex = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(ideaId);
+  
+    });
+    ideasArray[cardIndex].deleteFromStorage(cardIndex)
+    ideasArray[0].saveToStorage(ideasArray)
+    
+
+    // ideasArray = updatedArray;
+    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
+    };
+ };
+
+
+
+function deleteCard(e){
+  if (e.target.className === 'delete-button'){
+    e.target.closest('.idea-card').remove();
+    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+    var cardIndex = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(ideaId);
+  
+    });
+    ideasArray[cardIndex].deleteFromStorage(cardIndex)
+    ideasArray[0].saveToStorage(ideasArray);
+    
+
+    // ideasArray = updatedArray;
+    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
+    };
+ };
 
 
 
