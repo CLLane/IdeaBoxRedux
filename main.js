@@ -55,10 +55,10 @@ function abraCadabra(){
 
 for (var i = 0; i < ideasArray.length; i++) {
 
-var ideaCard =  `<article class="idea-card"> 
-          <div class="card-top" data-id="${ideasArray[i].id}">
+var ideaCard =  `<article class="idea-card" data-id="${ideasArray[i].id}"> 
+          <div class="card-top" >
           <button class="star-button"><img src="images/star.svg"></button>
-          <button class="delete-button"><img src="images/delete.svg"></button>
+          <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3>${ideasArray[i].title}</h3>
         <p class="idea-body">${ideasArray[i].body}</p>
@@ -75,10 +75,10 @@ var ideaCard =  `<article class="idea-card">
 }
 
 function generateCard(newIdeaObject) {
-  var ideaCard =  `<article class="idea-card"> 
-          <div class="card-top" data-id="${newIdeaObject.id}">
+  var ideaCard =  `<article class="idea-card" data-id="${newIdeaObject.id}"> 
+          <div class="card-top" >
           <button class="star-button"><img src="images/star.svg"></button>
-          <button class="delete-button"><img src="images/delete.svg"></button>
+          <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3>${newIdeaObject.title}</h3>
         <p class="idea-body">${newIdeaObject.body}</p>
@@ -95,4 +95,32 @@ function generateCard(newIdeaObject) {
 
 
 abraCadabra()
+
+
+
+//delet card from dom///
+cardSection.addEventListener('click', deleteCard)
+
+function deleteCard(e){
+  if (e.target.className === 'delete-button'){
+    e.target.closest('.idea-card').remove();
+    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+    var indexDeleteId = ideasArray.filter(function(arrayObj){
+      return arrayObj.id === ideaId;
+    })
+    };
+ };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
