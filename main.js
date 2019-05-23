@@ -47,8 +47,26 @@ titleInput.value === '' || bodyInput.value === '' ? saveButton.disabled = true: 
 
 //Populating Cards//
 
+
 //QuerySelect the card table
 
+cardSection.addEventListener('click', editContent)
+
+function editContent(e) {
+  if (e.target.className === 'idea-title') {
+    e.target.addEventListener('keyup', function(e) {
+      if (e.key === 'Enter') {
+        var newTitle = this.innerText;
+        console.log(newTitle)
+        var newInstance =new Idea(Date.now(), newTitle, this.body);
+        ideasArray.push(newInstance);
+        console.log(newInstance);
+      }
+    })
+    console.log(e.target);
+  
+}
+}
 
 
 function abraCadabra(){
@@ -60,8 +78,8 @@ var ideaCard =  `<article class="idea-card" data-id="${ideasArray[i].id}">
           <button class="star-button"><img src="images/star.svg"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
-        <h3>${ideasArray[i].title}</h3>
-        <p class="idea-body">${ideasArray[i].body}</p>
+        <h3 class="idea-title"contenteditable="true">${ideasArray[i].title}</h3>
+        <p class="idea-body" contenteditable="true">${ideasArray[i].body}</p>
         <div class="card-bottom">
           <button class="upvote-button"><img src="images/upvote.svg" class="upvote-svg"></button>
           <p class="quality-label">Quality:<span>Swill</span></p>
@@ -80,8 +98,8 @@ function generateCard(newIdeaObject) {
           <button class="star-button"><img src="images/star.svg"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
-        <h3>${newIdeaObject.title}</h3>
-        <p class="idea-body">${newIdeaObject.body}</p>
+        <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
+        <p class="idea-body" contenteditable="true">${newIdeaObject.body}</p>
         <div class="card-bottom">
           <button class="upvote-button"><img src="images/upvote.svg" class="upvote-svg"></button>
           <p class="quality-label">Quality:<span>Swill</span></p>
