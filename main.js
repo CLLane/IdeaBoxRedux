@@ -5,6 +5,7 @@ var cardSection = document.querySelector('#card-section')
 var ideasArray = [];
 
 saveButton.addEventListener('click', saveFunction);
+saveButton.addEventListener('click', enableSaveButton);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 
@@ -44,18 +45,17 @@ cardSection.addEventListener('keydown', editContent);
 
 cardSection.addEventListener('click', blurStuff);
 
-function blurStuff() {
-  e.target.addEventListener('blur', function() {
+function blurStuff(e) {
+  var blurredItem = e.target;
+  blurredItem.addEventListener('blur', function() {
   console.log('onblur event firing');
 })
 }
 
 function editContent(e) {
-
-
   if (e.key === 'Enter') {
-        e.target.blur()
-        console.log('hitting enter blur function firing');
+      e.target.blur()
+      console.log('hitting enter blur function firing');
   }
 }
 
