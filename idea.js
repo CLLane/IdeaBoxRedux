@@ -5,12 +5,14 @@ class Idea {
     this.body = body;
   }
 
-  saveToStorage() {
+  saveToStorage(updatedArray) {
     localStorage.setItem(this.id, JSON.stringify(this));
+
   }
 
-  deleteFromStorage(){
-    
+  deleteFromStorage(index){
+    ideasArray.splice(index, 1);
+    this.saveToStorage();
   }
 
   updateIdea() {
