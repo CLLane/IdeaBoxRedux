@@ -6,16 +6,16 @@ class Idea {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.id, JSON.stringify(this));
+  localStorage.setItem('ideas array', JSON.stringify(ideasArray));
   }
 
   deleteFromStorage(){
     
   }
 
-  updateIdea() {
+  // updateIdea(body or title) {
 
-  }
+  // }
 
   updateQuality() {
 
