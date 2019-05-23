@@ -105,9 +105,14 @@ function deleteCard(e){
   if (e.target.className === 'delete-button'){
     e.target.closest('.idea-card').remove();
     var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var indexDeleteId = ideasArray.filter(function(arrayObj){
-      return arrayObj.id === ideaId;
+    var updatedAray = ideasArray.filter(function(arrayObj){
+      if( arrayObj.id !== parseInt(ideaId)) {
+        return arrayObj
+      }
     })
+    ideasArray = updatedAray;
+    localStorage.setItem('ideas array', JSON.stringify(ideasArray));
+    console.log(updatedAray)
     };
  };
 
