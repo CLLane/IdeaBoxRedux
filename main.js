@@ -55,13 +55,21 @@ function blurStuff(e) {
         return arrayObj.id === parseInt(ideaId);
   })  
   console.log (ideasArray[cardIndex])
+
   if (blurredItem.className === 'idea-title'){
+
     console.log('title was edited')
-    console.log(blurredItem.innerText)
+    
+    ideasArray[cardIndex].title = blurredItem.innerText
+    ideasArray[cardIndex].saveToStorage();
   }
 
   if (blurredItem.className === 'idea-body') {
     console.log('body was edited');
+
+    ideasArray[cardIndex].body = blurredItem.innerText;
+    ideasArray[cardIndex].saveToStorage();
+
   }
 
 })
