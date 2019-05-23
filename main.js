@@ -47,15 +47,35 @@ cardSection.addEventListener('click', blurStuff);
 
 function blurStuff(e) {
   var blurredItem = e.target;
-  blurredItem.addEventListener('blur', function() {
-  console.log('onblur event firing');
+  blurredItem.addEventListener('blur', function(){
+
+  var ideaId = blurredItem.closest('.idea-card').getAttribute('data-id');
+
+  var cardIndex = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(ideaId);
+  })  
+  console.log (ideasArray[cardIndex])
+  if (blurredItem.className === 'idea-title'){
+    console.log('title was edited')
+    console.log(blurredItem.innerText)
+  }
+
+  if (blurredItem.className === 'idea-body') {
+    console.log('body was edited');
+  }
+
 })
-}
+
+  };
+
+
+
+
 
 function editContent(e) {
   if (e.key === 'Enter') {
       e.target.blur()
-      console.log('hitting enter blur function firing');
+      // console.log('hitting enter blur function firing');
   }
 }
 
@@ -84,57 +104,7 @@ function generateCard(newIdeaObject) {
 
 }
 
-
-
-
-
-
-//delet card from dom///
-// cardSection.addEventListener('click', deleteCard)
-
 cardSection.addEventListener('click', deleteCard);
-
-
-
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var updatedAray = ideasArray.filter(function(arrayObj){
-      if( arrayObj.id !== parseInt(ideaId)) {
-        return arrayObj
-      }
-    })
-    ideasArray = updatedAray;
-    localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    console.log(updatedAray)
-    };
- };
-
-function getIndex() {
-  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-  ideasArray.indexOf()
-}
-
-
-
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  
-    });
-    ideasArray[cardIndex].deleteFromStorage(cardIndex)
-    ideasArray[0].saveToStorage(ideasArray)
-    
-
-    // ideasArray = updatedArray;
-    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    };
- };
-
 
 
 function deleteCard(e){

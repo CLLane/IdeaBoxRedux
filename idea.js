@@ -15,9 +15,11 @@ class Idea {
    this.saveToStorage();
   }
 
-  // updateIdea(body or title) {
-
-  // }
+  updateIdea(titleOrBody, newText) {
+    this[titleOrBody] = newText;
+    console.log('update Idea function firing')
+    this.saveToStorage();
+  }
 
   updateQuality() {
 
