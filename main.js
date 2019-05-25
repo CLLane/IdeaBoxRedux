@@ -1,7 +1,7 @@
 var titleInput = document.querySelector('#title-input');
 var bodyInput = document.querySelector('#body-input');
 var saveButton = document.querySelector('#save-button');
-var cardSection = document.querySelector('#card-section')
+var cardSection = document.querySelector('#card-section');
 var ideasArray = [];
 
 saveButton.addEventListener('click', saveFunction);
@@ -11,6 +11,7 @@ bodyInput.addEventListener('keyup', enableSaveButton);
 
 instantiateIdeas();
 populateCards();
+noIdeasPrompt();
 
 function saveFunction(e) {
   e.preventDefault();
@@ -19,6 +20,7 @@ function saveFunction(e) {
   newIdeaInstance.saveToStorage();
   generateCard(newIdeaInstance);
   clearInputFields();
+  noIdeasPrompt();
 }
 
 function instantiateIdeas() {
@@ -68,7 +70,7 @@ function populateCards(){
 function generateCard(newIdeaObject) {
   var ideaCard =  `<article class="idea-card" data-id="${newIdeaObject.id}"> 
           <div class="card-top" >
-          <button class="star-button"><img src="images/star.svg"></button>
+          <button class="star-button"><img src="images/star.svg" id="star-image"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
@@ -90,50 +92,13 @@ function generateCard(newIdeaObject) {
 
 
 //delet card from dom///
-// cardSection.addEventListener('click', deleteCard)
 
 cardSection.addEventListener('click', deleteCard);
+cardSection.addEventListener('click', noIdeasPrompt)
+cardSection.addEventListener('click', toggleStar)
 
 
 
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var updatedAray = ideasArray.filter(function(arrayObj){
-      if( arrayObj.id !== parseInt(ideaId)) {
-        return arrayObj
-      }
-    })
-    ideasArray = updatedAray;
-    localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    console.log(updatedAray)
-    };
- };
-
-function getIndex() {
-  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-  ideasArray.indexOf()
-}
-
-
-
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  
-    });
-    ideasArray[cardIndex].deleteFromStorage(cardIndex)
-    ideasArray[0].saveToStorage(ideasArray)
-    
-
-    // ideasArray = updatedArray;
-    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    };
- };
 
 
 
@@ -147,18 +112,38 @@ function deleteCard(e){
     });
     ideasArray[cardIndex].deleteFromStorage(cardIndex)
     ideasArray[0].saveToStorage(ideasArray);
-    
-
+   
+  
     // ideasArray = updatedArray;
     // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
     };
  };
 
 
+function noIdeasPrompt() {
+  var prompt = document.querySelector('#no-idea')
+  if (ideasArray.length < 1){
+    prompt.classList.remove("hidden");
+  } 
+  if (ideasArray.length >0) {
+    prompt.classList.add("hidden");
+
+  }
 
 
+}
 
 
+//Function to create a persisting toggled star status//
+
+
+function toggleStar() {
+   var starImage = document.getElementById('star-image');
+   var inactive = "images/star.svg";
+   var active = "images/star-active.svg";
+   starImage.src = (starImage.src = inactive)? active : inactive;
+   
+}
 
 
 

@@ -15,10 +15,6 @@ class Idea {
    this.saveToStorage();
   }
 
-  // updateIdea(body or title) {
-
-  // }
-
   updateQuality() {
 
   }
