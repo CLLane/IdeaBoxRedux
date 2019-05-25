@@ -15,7 +15,7 @@ noIdeasPrompt();
 
 function saveFunction(e) {
   e.preventDefault();
-  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value, starred);
+  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value, bodyInput.starred);
   ideasArray.push(newIdeaInstance);
   newIdeaInstance.saveToStorage();
   generateCard(newIdeaInstance);
@@ -42,21 +42,34 @@ function enableSaveButton() {
   titleInput.value === '' || bodyInput.value === '' ? saveButton.disabled = true: saveButton.disabled = false;  
 }
 
-cardSection.addEventListener('keydown', editContent);
+cardSection.addEventListener('keydown', listenForEnter);
 
-cardSection.addEventListener('click', blurStuff);
+cardSection.addEventListener('click', listenForBlur);
 
-function blurStuff(e) {
-  var blurredItem = e.target;
-  blurredItem.addEventListener('blur', function() {
-  console.log('onblur event firing');
+function listenForBlur(e) {
+  var editedItem = e.target;
+  editedItem.addEventListener('blur', function(){
+  var ideaId = editedItem.closest('.idea-card').getAttribute('data-id');
+  var cardIndex = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(ideaId);
+  })  
+  console.log (ideasArray[cardIndex])
+  if (editedItem.className === 'idea-title'){
+    console.log('title was edited')
+    ideasArray[cardIndex].title = editedItem.innerText
+    ideasArray[cardIndex].saveToStorage();
+  }
+  if (editedItem.className === 'idea-body') {
+    console.log('body was edited');
+    ideasArray[cardIndex].body = editedItem.innerText;
+    ideasArray[cardIndex].saveToStorage();
+  }
 })
-}
+  };
 
-function editContent(e) {
+function listenForEnter(e) {
   if (e.key === 'Enter') {
       e.target.blur()
-      console.log('hitting enter blur function firing');
   }
 }
 
@@ -95,14 +108,11 @@ function generateCard(newIdeaObject) {
 
 
 
-
 //delet card from dom///
 
 cardSection.addEventListener('click', deleteCard);
 cardSection.addEventListener('click', noIdeasPrompt)
 cardSection.addEventListener('click', saveStar)
-
-
 
 
 
@@ -117,6 +127,7 @@ function deleteCard(e){
     });
     ideasArray[cardIndex].deleteFromStorage(cardIndex)
     ideasArray[0].saveToStorage(ideasArray);
+    
    
   
     // ideasArray = updatedArray;

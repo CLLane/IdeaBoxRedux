@@ -16,6 +16,13 @@ class Idea {
    this.saveToStorage();
   }
 
+  updateIdea(propertyToUpdate, newValue) {
+    this[propertyToUpdate] = newValue;
+    console.log('update Idea function firing')
+    this.saveToStorage();
+  }
+
+
   updateQuality() {
 
   }
