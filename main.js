@@ -1,7 +1,7 @@
 var titleInput = document.querySelector('#title-input');
 var bodyInput = document.querySelector('#body-input');
 var saveButton = document.querySelector('#save-button');
-var cardSection = document.querySelector('#card-section')
+var cardSection = document.querySelector('#card-section');
 var ideasArray = [];
 
 saveButton.addEventListener('click', saveFunction);
@@ -11,14 +11,16 @@ bodyInput.addEventListener('keyup', enableSaveButton);
 
 instantiateIdeas();
 populateCards();
+noIdeasPrompt();
 
 function saveFunction(e) {
   e.preventDefault();
-  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value);
+  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value, starred);
   ideasArray.push(newIdeaInstance);
   newIdeaInstance.saveToStorage();
   generateCard(newIdeaInstance);
   clearInputFields();
+  noIdeasPrompt();
 }
 
 function instantiateIdeas() {
@@ -26,9 +28,8 @@ function instantiateIdeas() {
     return
   }
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
-    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
+    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred);
   })
-  console.log(newArray)
   ideasArray = newArray;
 }
 
@@ -66,9 +67,15 @@ function populateCards(){
 }
 
 function generateCard(newIdeaObject) {
+  var starStatus;
+     if (newIdeaObject.starred === false){
+      starStatus = "images/star.svg";
+     } else {
+      starStatus = "images/star-active.svg";
+     }
   var ideaCard =  `<article class="idea-card" data-id="${newIdeaObject.id}"> 
           <div class="card-top" >
-          <button class="star-button"><img src="images/star.svg"></button>
+          <button class="star-button"><img src=${starStatus} class="star-image" id="star-image"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
@@ -90,50 +97,13 @@ function generateCard(newIdeaObject) {
 
 
 //delet card from dom///
-// cardSection.addEventListener('click', deleteCard)
 
 cardSection.addEventListener('click', deleteCard);
+cardSection.addEventListener('click', noIdeasPrompt)
+cardSection.addEventListener('click', saveStar)
 
 
 
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var updatedAray = ideasArray.filter(function(arrayObj){
-      if( arrayObj.id !== parseInt(ideaId)) {
-        return arrayObj
-      }
-    })
-    ideasArray = updatedAray;
-    localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    console.log(updatedAray)
-    };
- };
-
-function getIndex() {
-  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-  ideasArray.indexOf()
-}
-
-
-
-function deleteCard(e){
-  if (e.target.className === 'delete-button'){
-    e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  
-    });
-    ideasArray[cardIndex].deleteFromStorage(cardIndex)
-    ideasArray[0].saveToStorage(ideasArray)
-    
-
-    // ideasArray = updatedArray;
-    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
-    };
- };
 
 
 
@@ -147,18 +117,57 @@ function deleteCard(e){
     });
     ideasArray[cardIndex].deleteFromStorage(cardIndex)
     ideasArray[0].saveToStorage(ideasArray);
-    
-
+   
+  
     // ideasArray = updatedArray;
     // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
     };
  };
 
 
+function noIdeasPrompt() {
+  var prompt = document.querySelector('#no-idea')
+  if (ideasArray.length < 1){
+    prompt.classList.remove("hidden");
+  } 
+  if (ideasArray.length >0) {
+    prompt.classList.add("hidden");
+
+  }
 
 
+}
 
 
+//Function to create a persisting toggled star status//
+
+
+function toggleStar(e, index) {
+   var starImage = e.target;
+   console.log(starImage)
+   var inactive = "images/star.svg";
+   var active = "images/star-active.svg";
+   if (ideasArray[index].starred === true){
+      console.log('true')
+      starImage.src = active;
+   } else {
+    console.log('false')
+    starImage.src = inactive;
+   }
+
+}
+
+function saveStar(e) {
+  if (e.target.className === 'star-image') {
+    var cardId = e.target.closest('.idea-card').getAttribute('data-id')
+    var index = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(cardId);
+  });
+  ideasArray[index].starred = !ideasArray[index].starred;
+  ideasArray[index].saveToStorage();
+  toggleStar(e,index);
+ }
+}
 
 
 
