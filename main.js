@@ -15,7 +15,7 @@ noIdeasPrompt();
 
 function saveFunction(e) {
   e.preventDefault();
-  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value);
+  var newIdeaInstance = new Idea(Date.now(), titleInput.value, bodyInput.value, starred);
   ideasArray.push(newIdeaInstance);
   newIdeaInstance.saveToStorage();
   generateCard(newIdeaInstance);
@@ -70,7 +70,7 @@ function populateCards(){
 function generateCard(newIdeaObject) {
   var ideaCard =  `<article class="idea-card" data-id="${newIdeaObject.id}"> 
           <div class="card-top" >
-          <button class="star-button"><img src="images/star.svg" id="star-image"></button>
+          <button class="star-button"><img src="images/star.svg" class="star-image" id="star-image"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
@@ -95,7 +95,7 @@ function generateCard(newIdeaObject) {
 
 cardSection.addEventListener('click', deleteCard);
 cardSection.addEventListener('click', noIdeasPrompt)
-cardSection.addEventListener('click', toggleStar)
+cardSection.addEventListener('click', saveStar)
 
 
 
@@ -141,8 +141,20 @@ function toggleStar() {
    var starImage = document.getElementById('star-image');
    var inactive = "images/star.svg";
    var active = "images/star-active.svg";
-   starImage.src = (starImage.src = inactive)? active : inactive;
-   
+   starImage.src = (starImage.src === inactive)? active : inactive;
+
+}
+
+function saveStar(e) {
+  if (e.target.className === 'star-image') {
+    var cardId = e.target.closest('.idea-card').getAttribute('data-id')
+    var index = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(cardId);
+  });
+  ideasArray[index].starred = !ideasArray[index].starred;
+  ideasArray[index].saveToStorage();
+  console.log(ideasArray[index]);
+ }
 }
 
 
