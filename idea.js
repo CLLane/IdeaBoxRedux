@@ -1,8 +1,9 @@
 class Idea {
-  constructor(id, title, body) {
+  constructor(id, title, body, starred) {
     this.id = id; 
     this.title = title;
     this.body = body;
+    this.starred = starred || false;
   }
 
   saveToStorage() {
@@ -20,6 +21,7 @@ class Idea {
     console.log('update Idea function firing')
     this.saveToStorage();
   }
+
 
   updateQuality() {
 
