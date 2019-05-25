@@ -28,9 +28,8 @@ function instantiateIdeas() {
     return
   }
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
-    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body);
+    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred);
   })
-  console.log(newArray)
   ideasArray = newArray;
 }
 
@@ -68,9 +67,15 @@ function populateCards(){
 }
 
 function generateCard(newIdeaObject) {
+  var starStatus;
+     if (newIdeaObject.starred === false){
+      starStatus = "images/star.svg";
+     } else {
+      starStatus = "images/star-active.svg";
+     }
   var ideaCard =  `<article class="idea-card" data-id="${newIdeaObject.id}"> 
           <div class="card-top" >
-          <button class="star-button"><img src="images/star.svg" class="star-image" id="star-image"></button>
+          <button class="star-button"><img src=${starStatus} class="star-image" id="star-image"></button>
           <button class="delete-button"><img src="images/delete.svg" class="delete-button"></button>
         </div>
         <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
@@ -137,11 +142,18 @@ function noIdeasPrompt() {
 //Function to create a persisting toggled star status//
 
 
-function toggleStar() {
-   var starImage = document.getElementById('star-image');
+function toggleStar(e, index) {
+   var starImage = e.target;
+   console.log(starImage)
    var inactive = "images/star.svg";
    var active = "images/star-active.svg";
-   starImage.src = (starImage.src === inactive)? active : inactive;
+   if (ideasArray[index].starred === true){
+      console.log('true')
+      starImage.src = active;
+   } else {
+    console.log('false')
+    starImage.src = inactive;
+   }
 
 }
 
@@ -153,7 +165,7 @@ function saveStar(e) {
   });
   ideasArray[index].starred = !ideasArray[index].starred;
   ideasArray[index].saveToStorage();
-  console.log(ideasArray[index]);
+  toggleStar(e,index);
  }
 }
 

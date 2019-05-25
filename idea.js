@@ -3,7 +3,7 @@ class Idea {
     this.id = id; 
     this.title = title;
     this.body = body;
-    this.starred = false;
+    this.starred = starred || false;
   }
 
   saveToStorage() {
