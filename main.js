@@ -2,15 +2,26 @@ var titleInput = document.querySelector('#title-input');
 var bodyInput = document.querySelector('#body-input');
 var saveButton = document.querySelector('#save-button');
 var cardSection = document.querySelector('#card-section');
+var searchBar = document.querySelector('#search-input');
 var ideasArray = [];
 
 saveButton.addEventListener('click', saveFunction);
 saveButton.addEventListener('click', enableSaveButton);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
+searchBar.addEventListener('keyup', searchFunction);
+
+function searchFunction() {
+  var searchInput = searchBar.value
+  cardSection.innerHTML = "";
+  var newArray = ideasArray.filter(function(arrayObject){
+  return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
+})
+  populateCards(newArray);
+}
 
 instantiateIdeas();
-populateCards();
+populateCards(ideasArray);
 noIdeasPrompt();
 
 function saveFunction(e) {
@@ -92,9 +103,9 @@ function listenForEnter(e) {
   }
 }
 
-function populateCards(){
-  for (var i = 0; i < ideasArray.length; i++) {
-    generateCard(ideasArray[i]);
+function populateCards(array){
+  for (var i = 0; i < array.length; i++) {
+    generateCard(array[i]);
   }
 }
 
@@ -152,7 +163,6 @@ function noIdeasPrompt() {
   } 
   if (ideasArray.length >0) {
     prompt.classList.add("hidden");
-
   }
 
 
