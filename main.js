@@ -47,11 +47,16 @@ cardSection.addEventListener('keydown', listenForEnter);
 
 cardSection.addEventListener('click', listenForBlur);
 
-cardSection.addEventListener('click', changeQuality);
+cardSection.addEventListener('click', changeQualityHandler);
+
+function changeQualityHandler(e) {
+  if (e.target.closest('.idea-card') !== null) {
+    changeQuality(e);
+  }
+}
 
 function changeQuality(e) {
-  
-  var span = e.target.closest('.card-bottom').querySelector('#quality-span');
+  var span;
   var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
   var cardIndex = ideasArray.findIndex(function(arrayObj){
         return arrayObj.id === parseInt(ideaId);
@@ -59,11 +64,14 @@ function changeQuality(e) {
   var newIdeaObject = ideasArray[cardIndex] 
   if (e.target.className === 'upvote-button'){
     ideasArray[cardIndex].updateQuality(cardIndex, 'upvote');
+    span = e.target.closest('.card-bottom').querySelector('#quality-span');
+      span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
   }
   if (e.target.className === 'downvote-button'){
-    ideasArray[cardIndex].updateQuality(cardIndex, 'downvote')
+    ideasArray[cardIndex].updateQuality(cardIndex, 'downvote');
+    span = e.target.closest('.card-bottom').querySelector('#quality-span');
+    span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
   }
-  span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
 }
 
 function listenForBlur(e) {
