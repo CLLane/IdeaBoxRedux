@@ -31,7 +31,6 @@ function instantiateIdeas() {
     return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred, arrayItem.quality);
   })
   ideasArray = newArray;
-  console.log(ideasArray)
 }
 
 function clearInputFields() {
@@ -45,7 +44,7 @@ function enableSaveButton() {
 
 cardSection.addEventListener('keydown', listenForEnter);
 
-// cardSection.addEventListener('click', listenForBlur);
+cardSection.addEventListener('focusout', updateCard);
 
 cardSection.addEventListener('click', changeQualityHandler);
 
@@ -71,24 +70,38 @@ function changeQuality(e) {
   }
 }
 
-function listenForBlur(e) {
+
+
+
+//addEventListener of focusout on card section  update body || title
+
+function updateCard(e) { 
   var editedItem = e.target;
- editedItem.addEventListener('blur', function(){
   var index = getCardId(e);
- })
   if (editedItem.className === 'idea-title'){
-    ideasArray[index].title = editedItem.innerText
-    ideasArray[index].saveToStorage();
+    updateCardTitle (index, editedItem);
   }
   if (editedItem.className === 'idea-body') {
-    ideasArray[index].body = editedItem.innerText;
-    ideasArray[index].saveToStorage();
+    updateCardBody (index, editedItem);
   }
 };
 
+function updateCardTitle (index, editedItem) {
+  ideasArray[index].title = editedItem.innerText
+  ideasArray[index].updateIdea(ideasArray[index].title, editedItem.innerText);
+}
+
+function updateCardBody (index, editedItem)  {
+  ideasArray[index].body = editedItem.innerText;
+  ideasArray[index].updateIdea(ideasArray[index].body, editedItem.innerText);
+}
+
+
+
 function listenForEnter(e) {
   if (e.key === 'Enter') {
-      e.target.blur()
+      e.target.blur();
+      updateCard(e);
   }
 }
 
@@ -182,11 +195,6 @@ function saveStar(e) {
   toggleStar(e,index);
   };
  };
-
-
-
-
-
 
 
 
