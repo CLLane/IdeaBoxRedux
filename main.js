@@ -51,16 +51,21 @@ cardSection.addEventListener('click', changeQualityHandler);
 
 function changeQualityHandler(e) {
   if (e.target.closest('.idea-card') !== null) {
-    changeQuality(e);
+    var cardIndex = findIndex(e);
+    changeQuality(e, cardIndex);
   }
 }
 
-function changeQuality(e) {
-  var span;
+function findIndex(e) {
   var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
   var cardIndex = ideasArray.findIndex(function(arrayObj){
         return arrayObj.id === parseInt(ideaId);
   }); 
+  return cardIndex
+}
+
+function changeQuality(e, cardIndex) {
+  var span;
   var newIdeaObject = ideasArray[cardIndex] 
   if (e.target.className === 'upvote-button'){
     ideasArray[cardIndex].updateQuality(cardIndex, 'upvote');
