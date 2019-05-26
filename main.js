@@ -5,6 +5,10 @@ var cardSection = document.querySelector('#card-section');
 var searchBar = document.querySelector('#search-input');
 var ideasArray = [];
 
+
+cardSection.addEventListener('click', deleteCard);
+cardSection.addEventListener('click', noIdeasPrompt)
+cardSection.addEventListener('click', saveStar)
 saveButton.addEventListener('click', saveFunction);
 saveButton.addEventListener('click', enableSaveButton);
 titleInput.addEventListener('keyup', enableSaveButton);
@@ -66,25 +70,22 @@ function changeQualityHandler(e) {
 }
 
 function changeQuality(e) {
-  var span;
   var index = getCardId(e);
   var newIdeaObject = ideasArray[index];
   if (e.target.className === 'upvote-button'){
-    ideasArray[index].updateQuality(index, 'upvote');
-    span = e.target.closest('.card-bottom').querySelector('#quality-span');
-      span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
+    voteOrDie(e, index, newIdeaObject, 'upvote');
   }
   if (e.target.className === 'downvote-button'){
-    ideasArray[index].updateQuality(index, 'downvote');
-    span = e.target.closest('.card-bottom').querySelector('#quality-span');
-    span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
+    voteOrDie(e, index, newIdeaObject, 'downvote');
   }
 }
 
+function voteOrDie(e, index, newIdeaObject, vote) {
+  var span = e.target.closest('.card-bottom').querySelector('#quality-span');
+  ideasArray[index].updateQuality(index, vote);
+  span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
+}
 
-
-
-//addEventListener of focusout on card section  update body || title
 
 function updateCard(e) { 
   var editedItem = e.target;
@@ -153,10 +154,6 @@ function generateCard(newIdeaObject) {
 
 //delet card from dom///
 
-cardSection.addEventListener('click', deleteCard);
-cardSection.addEventListener('click', noIdeasPrompt)
-cardSection.addEventListener('click', saveStar)
-
 
 
 
@@ -209,7 +206,6 @@ function saveStar(e) {
 
 
 function getCardId(e) {
-  console.log(e)
   var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
   return ideasArray.findIndex(function(arrayObj){
         return arrayObj.id == parseInt(ideaId);
