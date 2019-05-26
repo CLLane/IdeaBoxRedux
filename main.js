@@ -28,9 +28,10 @@ function instantiateIdeas() {
     return
   }
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
-    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred);
+    return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred, arrayItem.quality);
   })
   ideasArray = newArray;
+  console.log(ideasArray)
 }
 
 function clearInputFields() {
@@ -45,6 +46,25 @@ function enableSaveButton() {
 cardSection.addEventListener('keydown', listenForEnter);
 
 cardSection.addEventListener('click', listenForBlur);
+
+cardSection.addEventListener('click', changeQuality);
+
+function changeQuality(e) {
+  
+  var span = e.target.closest('.card-bottom').querySelector('#quality-span');
+  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+  var cardIndex = ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id === parseInt(ideaId);
+  }); 
+  var newIdeaObject = ideasArray[cardIndex] 
+  if (e.target.className === 'upvote-button'){
+    ideasArray[cardIndex].updateQuality(cardIndex, 'upvote');
+  }
+  if (e.target.className === 'downvote-button'){
+    ideasArray[cardIndex].updateQuality(cardIndex, 'downvote')
+  }
+  span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
+}
 
 function listenForBlur(e) {
   var editedItem = e.target;
@@ -94,9 +114,9 @@ function generateCard(newIdeaObject) {
         <h3 class="idea-title" contenteditable="true">${newIdeaObject.title}</h3>
         <p class="idea-body" contenteditable="true">${newIdeaObject.body}</p>
         <div class="card-bottom">
-          <button class="upvote-button"><img src="images/upvote.svg" class="upvote-svg"></button>
-          <p class="quality-label">Quality:<span>Swill</span></p>
-          <button class="downvote-button"><img src="images/downvote.svg"></button>
+          <button class="upvote-button" id="upvote-button"><img src="images/upvote.svg" class="upvote-button"></button>
+          <p class="quality-label">Quality:<span id="quality-span">${newIdeaObject.qualityArray[newIdeaObject.quality]}</span></p>
+          <button class="downvote-button" id="downvote-button"><img src="images/downvote.svg" class='downvote-button'></button>
         </div>
         </article>`
 
