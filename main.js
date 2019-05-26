@@ -45,7 +45,7 @@ function enableSaveButton() {
 
 cardSection.addEventListener('keydown', listenForEnter);
 
-cardSection.addEventListener('click', listenForBlur);
+// cardSection.addEventListener('click', listenForBlur);
 
 cardSection.addEventListener('click', changeQualityHandler);
 
@@ -57,18 +57,15 @@ function changeQualityHandler(e) {
 
 function changeQuality(e) {
   var span;
-  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-  var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  }); 
-  var newIdeaObject = ideasArray[cardIndex] 
+  var index = getCardId(e);
+  var newIdeaObject = ideasArray[index];
   if (e.target.className === 'upvote-button'){
-    ideasArray[cardIndex].updateQuality(cardIndex, 'upvote');
+    ideasArray[index].updateQuality(index, 'upvote');
     span = e.target.closest('.card-bottom').querySelector('#quality-span');
       span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
   }
   if (e.target.className === 'downvote-button'){
-    ideasArray[cardIndex].updateQuality(cardIndex, 'downvote');
+    ideasArray[index].updateQuality(index, 'downvote');
     span = e.target.closest('.card-bottom').querySelector('#quality-span');
     span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
   }
@@ -76,24 +73,18 @@ function changeQuality(e) {
 
 function listenForBlur(e) {
   var editedItem = e.target;
-  editedItem.addEventListener('blur', function(){
-  var ideaId = editedItem.closest('.idea-card').getAttribute('data-id');
-  var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  })  
-  console.log (ideasArray[cardIndex])
+ editedItem.addEventListener('blur', function(){
+  var index = getCardId(e);
+ })
   if (editedItem.className === 'idea-title'){
-    console.log('title was edited')
-    ideasArray[cardIndex].title = editedItem.innerText
-    ideasArray[cardIndex].saveToStorage();
+    ideasArray[index].title = editedItem.innerText
+    ideasArray[index].saveToStorage();
   }
   if (editedItem.className === 'idea-body') {
-    console.log('body was edited');
-    ideasArray[cardIndex].body = editedItem.innerText;
-    ideasArray[cardIndex].saveToStorage();
+    ideasArray[index].body = editedItem.innerText;
+    ideasArray[index].saveToStorage();
   }
-})
-  };
+};
 
 function listenForEnter(e) {
   if (e.key === 'Enter') {
@@ -147,21 +138,11 @@ cardSection.addEventListener('click', saveStar)
 
 function deleteCard(e){
   if (e.target.className === 'delete-button'){
+    var index = getCardId(e);
     e.target.closest('.idea-card').remove();
-    var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
-    var cardIndex = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(ideaId);
-  
-    });
-    ideasArray[cardIndex].deleteFromStorage(cardIndex)
-    ideasArray[0].saveToStorage(ideasArray);
-    
-   
-  
-    // ideasArray = updatedArray;
-    // localStorage.setItem('ideas array', JSON.stringify(ideasArray));
+    ideasArray[index].deleteFromStorage(index)
     };
- };
+  };
 
 
 function noIdeasPrompt() {
@@ -183,14 +164,11 @@ function noIdeasPrompt() {
 
 function toggleStar(e, index) {
    var starImage = e.target;
-   console.log(starImage)
    var inactive = "images/star.svg";
    var active = "images/star-active.svg";
    if (ideasArray[index].starred === true){
-      console.log('true')
       starImage.src = active;
    } else {
-    console.log('false')
     starImage.src = inactive;
    }
 
@@ -198,16 +176,24 @@ function toggleStar(e, index) {
 
 function saveStar(e) {
   if (e.target.className === 'star-image') {
-    var cardId = e.target.closest('.idea-card').getAttribute('data-id')
-    var index = ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id === parseInt(cardId);
-  });
+    var index = getCardId(e);
   ideasArray[index].starred = !ideasArray[index].starred;
   ideasArray[index].saveToStorage();
   toggleStar(e,index);
- }
+  };
+ };
+
+
+
+
+
+
+
+
+function getCardId(e) {
+  console.log(e)
+  var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
+  return ideasArray.findIndex(function(arrayObj){
+        return arrayObj.id == parseInt(ideaId);
+  });
 }
-
-
-
-

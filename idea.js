@@ -14,25 +14,21 @@ class Idea {
 
   deleteFromStorage(index){
    ideasArray.splice(index, 1);
-   console.log(ideasArray);
    this.saveToStorage();
   }
 
   updateIdea(propertyToUpdate, newValue) {
     this[propertyToUpdate] = newValue;
-    console.log('update Idea function firing')
     this.saveToStorage();
   }
 
 
   updateQuality(cardIndex, buttonType) {
     if (buttonType === 'upvote' && this.quality < 2){
-      this.quality++
-      console.log(this.qualityArray[this.quality])
+      this.quality++;
     }
     if (buttonType === 'downvote' && this.quality > 0){
-      this.quality--
-      console.log(this.qualityArray[this.quality])
+      this.quality--;
     }
     ideasArray[cardIndex].quality = this.quality;
     ideasArray[cardIndex].saveToStorage();
