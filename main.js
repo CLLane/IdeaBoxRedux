@@ -5,15 +5,33 @@ var cardSection = document.querySelector('#card-section');
 var searchBar = document.querySelector('#search-input');
 var ideasArray = [];
 
-
-cardSection.addEventListener('click', deleteCard);
-cardSection.addEventListener('click', noIdeasPrompt)
-cardSection.addEventListener('click', saveStar)
-saveButton.addEventListener('click', saveFunction);
-saveButton.addEventListener('click', enableSaveButton);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 searchBar.addEventListener('keyup', searchFunction);
+cardSection.addEventListener('keydown', listenForEnter);
+cardSection.addEventListener('focusout', updateCard);
+cardSection.addEventListener('click', cardSectionHandler);
+saveButton.addEventListener('click', saveButtonHandler)
+window.addEventListener('load', pageLoadHandler)
+
+
+function pageLoadHandler() {
+  instantiateIdeas();
+  populateCards(ideasArray);
+  noIdeasPrompt();
+}
+
+function cardSectionHandler(e) {
+  deleteCard(e);
+  noIdeasPrompt();
+  saveStar(e);
+  changeQualityHandler(e);
+}
+
+function saveButtonHandler(e) {
+  saveFunction(e);
+  enableSaveButton();
+}
 
 function searchFunction() {
   var searchInput = searchBar.value
@@ -23,10 +41,6 @@ function searchFunction() {
 })
   populateCards(newArray);
 }
-
-instantiateIdeas();
-populateCards(ideasArray);
-noIdeasPrompt();
 
 function saveFunction(e) {
   e.preventDefault();
@@ -57,12 +71,6 @@ function enableSaveButton() {
   titleInput.value === '' || bodyInput.value === '' ? saveButton.disabled = true: saveButton.disabled = false;  
 }
 
-cardSection.addEventListener('keydown', listenForEnter);
-
-cardSection.addEventListener('focusout', updateCard);
-
-cardSection.addEventListener('click', changeQualityHandler);
-
 function changeQualityHandler(e) {
   if (e.target.closest('.idea-card') !== null) {
     changeQuality(e);
@@ -86,7 +94,6 @@ function voteOrDie(e, index, newIdeaObject, vote) {
   span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
 }
 
-
 function updateCard(e) { 
   var editedItem = e.target;
   var index = getCardId(e);
@@ -107,8 +114,6 @@ function updateCardBody (index, editedItem)  {
   ideasArray[index].body = editedItem.innerText;
   ideasArray[index].updateIdea(ideasArray[index].body, editedItem.innerText);
 }
-
-
 
 function listenForEnter(e) {
   if (e.key === 'Enter') {
@@ -143,19 +148,8 @@ function generateCard(newIdeaObject) {
           <button class="downvote-button" id="downvote-button"><img src="images/downvote.svg" class='downvote-button'></button>
         </div>
         </article>`
-
-        cardSection.insertAdjacentHTML('afterbegin', ideaCard);
-
+  cardSection.insertAdjacentHTML('afterbegin', ideaCard);
 }
-
-
-
-
-
-//delet card from dom///
-
-
-
 
 function deleteCard(e){
   if (e.target.className === 'delete-button'){
@@ -174,13 +168,7 @@ function noIdeasPrompt() {
   if (ideasArray.length >0) {
     prompt.classList.add("hidden");
   }
-
-
 }
-
-
-//Function to create a persisting toggled star status//
-
 
 function toggleStar(e, index) {
    var starImage = e.target;
@@ -191,7 +179,6 @@ function toggleStar(e, index) {
    } else {
     starImage.src = inactive;
    }
-
 }
 
 function saveStar(e) {
@@ -202,8 +189,6 @@ function saveStar(e) {
   toggleStar(e,index);
   };
  };
-
-
 
 function getCardId(e) {
   var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
