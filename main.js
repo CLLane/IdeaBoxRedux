@@ -37,6 +37,7 @@ function saveButtonHandler(e) {
 
 function searchFunction(arrayName) {
   if (filterStarredButton.clicked === true) {
+    console.log('clicked function');
     var starredArray = ideasArray.filter(function(arrayObject){
     return arrayObject.starred === true
     })
@@ -54,26 +55,42 @@ function filterStarred(){
   cardSection.innerHTML = '';
   if (filterStarredButton.innerText === 'Show Starred Ideas') {
   filterStarredButton.innerText = 'Show All Cards'
-  var starred = createFilterArray(starred);
-  populateCards(starred);
+  var starredArray = ideasArray.filter(function(arrayObject){
+    return arrayObject.starred === true
+  })
+  populateCards(starredArray);
+  searchFunction(starredArray)
+  return starredArray
   } 
   filterStarredButton.innerText = 'Show Starred Ideas'
-  populateCards(ideasArray);
-}
-
-function createFilterArray(filterType) {
-  var filterArray = ideasArray.filter(function(arrayObject){
-    return arrayObject.filterType === true
-  })
-  populateCards(filterArray);
-  searchFunction(filterArray);
-    return filterArray
+  populateCards(ideasArray)
+  // searchFunction(ideasArray)
+  // return ideasArray;
 }
 
 function toggleFilterStarred() {
   filterStarredButton.clicked = !filterStarredButton.clicked
-  filterStarred()
+  console.log(filterStarredButton.clicked)
+  filterStarredTest()
 }
+
+function filterStarredTest() {
+  cardSection.innerHTML = '';
+  if (filterStarredButton.clicked === true) {
+    filterStarredButton.innerText = 'Show All Cards';
+    var starredArray = ideasArray.filter(function(arrayObject){
+    return arrayObject.starred === true
+  })
+    populateCards(starredArray)
+    return starredArray;
+  }
+  if (filterStarredButton.clicked === false) {
+
+    filterStarredButton.innerText = 'Show Starred Ideas';
+    populateCards(ideasArray)
+  }
+}
+
 
 function saveFunction(e) {
   e.preventDefault();
