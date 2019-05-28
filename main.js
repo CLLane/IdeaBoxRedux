@@ -37,6 +37,7 @@ function saveButtonHandler(e) {
 }
 
 function searchFunction(arrayName) {
+
    if (filterStarredButton.clicked === true){
     starredSearch();
    } else {
@@ -51,6 +52,7 @@ function searchFunction(arrayName) {
   
   function starredSearch () {
      var starredArray = filterStarred();
+
     var searchInput = searchBar.value
      cardSection.innerHTML = '';
     var newArray = starredArray.filter(function(arrayObject){
@@ -60,6 +62,7 @@ function searchFunction(arrayName) {
   }
 
 function filterStarred(){
+
 
   if (filterStarredButton.clicked === true) {
     cardSection.innerHTML = '';
@@ -89,7 +92,26 @@ function toggleFilterStarred() {
     populateCards(ideasArray);
   }
   filterStarred()
+
 }
+
+function filterStarredTest() {
+  cardSection.innerHTML = '';
+  if (filterStarredButton.clicked === true) {
+    filterStarredButton.innerText = 'Show All Cards';
+    var starredArray = ideasArray.filter(function(arrayObject){
+    return arrayObject.starred === true
+  })
+    populateCards(starredArray)
+    return starredArray;
+  }
+  if (filterStarredButton.clicked === false) {
+
+    filterStarredButton.innerText = 'Show Starred Ideas';
+    populateCards(ideasArray)
+  }
+}
+
 
 function saveFunction(e) {
   e.preventDefault();
