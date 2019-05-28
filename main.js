@@ -50,9 +50,9 @@ function searchFunction(arrayName) {
 }
   }
   
-  function starredSearch () {
-     var starredArray = filterStarred();
-
+function starredSearch () {
+     var starredArray = starredFilterArray();
+     console.log(starredArray)
     var searchInput = searchBar.value
      cardSection.innerHTML = '';
     var newArray = starredArray.filter(function(arrayObject){
@@ -84,15 +84,13 @@ function toggleFilterStarred() {
   filterStarredButton.clicked = !filterStarredButton.clicked;
   if (filterStarredButton.clicked === true) {
     filterStarredButton.innerText = 'Show All Cards'
-    console.log()
   } 
   if (filterStarredButton.clicked === false){
-     cardSection.innerHTML = '';
+    cardSection.innerHTML = '';
     filterStarredButton.innerText = 'Show Starred Ideas';
     populateCards(ideasArray);
   }
   filterStarred()
-
 }
 
 function filterStarredTest() {
