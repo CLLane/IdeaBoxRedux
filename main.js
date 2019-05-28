@@ -4,7 +4,7 @@ var saveButton = document.querySelector('#save-button');
 var cardSection = document.querySelector('#card-section');
 var searchBar = document.querySelector('#search-input');
 var filterStarredButton = document.querySelector('.filter-starred-button');
-var prompt = document.querySelector('.hidden')
+var prompt = document.querySelector('#no-idea')
 var ideasArray = [];
 
 titleInput.addEventListener('keyup', enableSaveButton);
@@ -206,16 +206,17 @@ function deleteCard(e){
     e.target.closest('.idea-card').remove();
     ideasArray[index].deleteFromStorage(index)
     };
+   noIdeasPrompt();
   };
 
 
 function noIdeasPrompt() {
-  console.log(prompt)
+  
   if (ideasArray.length < 1){
-    prompt.style.display = ''
+    prompt.classList.remove("hidden");
   } 
   if (ideasArray.length >0) {
-    prompt.style.display = 'none';
+    prompt.classList.add("hidden");
   }
 }
 
