@@ -7,7 +7,7 @@ var filterStarredButton = document.querySelector('.filter-starred-button');
 var filterSwillButton = document.querySelector('#swill-filter');
 var filterPlausibleButton = document.querySelector('#plausible-filter');
 var filterGeniusButton = document.querySelector('#genius-filter');
-var prompt = document.querySelector('#no-idea')
+var prompt = document.querySelector('#no-idea');
 var ideasArray = [];
 var prompt = document.querySelector('#no-idea');
 var body = document.querySelector('body');
@@ -15,7 +15,7 @@ var aside = document.querySelector('aside');
 var navTitle = document.querySelector('.desktop-nav-title');
 var showMoreButton = document.querySelector('.show-more-button');
 var hamburgerButton = document.querySelector('.hamburger-button');
-var main = document.querySelector('main')
+var main = document.querySelector('main');
 
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
@@ -28,11 +28,9 @@ filterStarredButton.addEventListener('click', toggleFilterStarred);
 filterSwillButton.addEventListener('click', toggleFilterQuality);
 filterPlausibleButton.addEventListener('click', toggleFilterQuality);
 filterGeniusButton.addEventListener('click', toggleFilterQuality);
-showMoreButton.addEventListener('click', showMoreButtonToggle)
-hamburgerButton.addEventListener('click', toggleMobileMenu)
+showMoreButton.addEventListener('click', showMoreButtonToggle);
+hamburgerButton.addEventListener('click', toggleMobileMenu);
 window.addEventListener('load', pageLoadHandler);
-
-
 
 function showMoreButtonToggle() {
   showMoreButton.clicked = !showMoreButton.clicked;
@@ -46,49 +44,51 @@ function showMoreButtonToggle() {
   }
 }
 
-
 function toggleMobileMenu(e) {
-    hamburgerButton.clicked = !hamburgerButton.clicked
-    changeMobileMenuIcon(hamburgerButton);
-    if (hamburgerButton.clicked === true) {
-      main.classList.add('opacity')
-      aside.classList.add('unhidden');
-      navTitle.classList.add('hidden');
-    } else {aside.classList.remove('unhidden');
-      navTitle.classList.remove('hidden');
-      main.classList.remove('opacity')
-    }
+  hamburgerButton.clicked = !hamburgerButton.clicked;
+  changeMobileMenuIcon(hamburgerButton);
+  if (hamburgerButton.clicked === true) {
+    main.classList.add('opacity');
+    aside.classList.add('unhidden');
+    navTitle.classList.add('hidden');
+  } else {aside.classList.remove('unhidden');
+    navTitle.classList.remove('hidden');
+    main.classList.remove('opacity');
   }
+}
 
 function changeMobileMenuIcon (button) {
   if (button.clicked === true) {
-      var mobileMenu = document.querySelector('.mobile-nav')
+      var mobileMenu = document.querySelector('.mobile-nav');
       button.src = 'images/menu-close.svg';
-    }
-    if (button.clicked === false) {
-      button.src = 'images/menu.svg';
-    }
+  }
+  if (button.clicked === false) {
+    button.src = 'images/menu.svg';
+  }
 }
 
 function pageLoadHandler() {
-  instantiateIdeas();
-  pageLoadCardPopulation();
-  noIdeasPrompt();
-  showMoreButton.clicked === false;
+ instantiateIdeas();
+ if (ideasArray !== []){
+   pageLoadCardPopulation();
+   noIdeasPrompt();
+ }
+ showMoreButton.clicked === false;
 }
 
 function pageLoadCardPopulation() {
-  var begin = ideasArray.length - 10
-  var end = begin + 11;
-  var tenIdeasArray = ideasArray.slice(begin, end)
-  for (var i = 0; i < 10; i++) {
-    generateCard(tenIdeasArray[i]);
-  }
+  if (ideasArray.length > 9) {
+    for (var i = 0; i < 10; i++) {
+      generateCard(ideasArray[i]);
+    }
+  } else {
+     populateCards(ideasArray);
+    }
 }
 
 function showMoreCards() {
   for (var i = 10; i < ideasArray.length; i++) {
-    generateCard(ideasArray[i])
+    generateCard(ideasArray[i]);
   }
 }
 
@@ -110,21 +110,20 @@ function searchFunction(arrayName) {
   var newArray = generateSearchResultsArray(searchArray, searchBar.value);
   populateCards(newArray);
   if (searchBar.value === '') {
-    repopulateAfterEmptySearch()
+    repopulateAfterEmptySearch();
   }
 }
 
-
 function repopulateAfterEmptySearch(){
-  populateCards(ideasArray)
-    resetFilterButtons()
+  populateCards(ideasArray);
+  resetFilterButtons();
 }
 
 function generateSearchResultsArray(array, searchWords){
   var searchResultsArray = array.filter(function(arrayObject){
-  return arrayObject.title.includes(searchWords) || arrayObject.body.includes(searchWords)
-  })
-  return searchResultsArray
+  return arrayObject.title.includes(searchWords) || arrayObject.body.includes(searchWords);
+  });
+  return searchResultsArray;
 }
 
 function resetFilterButtons(){
@@ -135,31 +134,30 @@ function resetFilterButtons(){
 }
 
 function toggleButtons(button) {
-  button.classList.remove('filter-selected')
-  button.clicked != button.clicked
+  button.classList.remove('filter-selected');
+  button.clicked != button.clicked;
 }
 
-function filterStarred(){
+function filterStarred() {
   if (filterStarredButton.clicked === true) {
     cardSection.innerHTML = '';
     var starred = starredFilterArray();
     populateCards(starred);
-    // return starred;
     } 
   return ideasArray;
 }
 
 function starredFilterArray() {
   var filterArray = ideasArray.filter(function(arrayObject){
-    return arrayObject.starred === true
-  })
-    return filterArray
+    return arrayObject.starred === true;
+  });
+    return filterArray;
 }
 
 function toggleFilterStarred() {
   filterStarredButton.clicked = !filterStarredButton.clicked;
   if (filterStarredButton.clicked === true) {
-    filterStarredButton.innerText = 'Show All Cards'
+    filterStarredButton.innerText = 'Show All Cards';
   } 
   if (filterStarredButton.clicked === false){
     cardSection.innerHTML = '';
@@ -181,7 +179,7 @@ function saveFunction(e) {
 
 function instantiateIdeas() {
   if (localStorage.getItem('ideas array') === null){
-    return
+    return;
   }
   var newArray = JSON.parse(localStorage.getItem('ideas array')).map(function (arrayItem){
     return new Idea(arrayItem.id, arrayItem.title, arrayItem.body, arrayItem.starred, arrayItem.quality);
@@ -207,10 +205,10 @@ function changeQualityHandler(e) {
 function changeQuality(e) {
   var index = getCardId(e);
   var newIdeaObject = ideasArray[index];
-  if (e.target.className === 'upvote-button'){
+  if (e.target.className === 'upvote-button') {
     voteOrDie(e, index, newIdeaObject, 'upvote');
   }
-  if (e.target.className === 'downvote-button'){
+  if (e.target.className === 'downvote-button') {
     voteOrDie(e, index, newIdeaObject, 'downvote');
   }
 }
@@ -218,13 +216,13 @@ function changeQuality(e) {
 function voteOrDie(e, index, newIdeaObject, vote) {
   var span = e.target.closest('.card-bottom').querySelector('#quality-span');
   ideasArray[index].updateQuality(index, vote);
-  span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality]
+  span.innerText = newIdeaObject.qualityArray[newIdeaObject.quality];
 }
 
 function updateCard(e) { 
   var editedItem = e.target;
   var index = getCardId(e);
-  if (editedItem.className === 'idea-title'){
+  if (editedItem.className === 'idea-title') {
     updateCardTitle (index, editedItem);
   }
   if (editedItem.className === 'idea-body') {
@@ -233,11 +231,11 @@ function updateCard(e) {
 };
 
 function updateCardTitle (index, editedItem) {
-  ideasArray[index].title = editedItem.innerText
+  ideasArray[index].title = editedItem.innerText;
   ideasArray[index].updateIdea(ideasArray[index].title, editedItem.innerText);
 }
 
-function updateCardBody (index, editedItem)  {
+function updateCardBody (index, editedItem) {
   ideasArray[index].body = editedItem.innerText;
   ideasArray[index].updateIdea(ideasArray[index].body, editedItem.innerText);
 }
@@ -249,7 +247,7 @@ function listenForEnter(e) {
   }
 }
 
-function populateCards(array){
+function populateCards(array) {
   for (var i = 0; i < array.length; i++) {
     generateCard(array[i]);
   }
@@ -274,23 +272,22 @@ function generateCard(newIdeaObject) {
           <p class="quality-label">Quality:<span id="quality-span">${newIdeaObject.qualityArray[newIdeaObject.quality]}</span></p>
           <button class="downvote-button" id="downvote-button"><img src="images/downvote.svg" class='downvote-button'></button>
         </div>
-        </article>`
+        </article>`;
   cardSection.insertAdjacentHTML('afterbegin', ideaCard);
 }
 
-function deleteCard(e){
+function deleteCard(e) {
   if (e.target.className === 'delete-button'){
     var index = getCardId(e);
     e.target.closest('.idea-card').remove();
-    ideasArray[index].deleteFromStorage(index)
-    };
-   noIdeasPrompt();
-  };
+    ideasArray[index].deleteFromStorage(index);
+  }
+  noIdeasPrompt();
+}
 
 
 function noIdeasPrompt() {
-  
-  if (ideasArray.length < 1){
+  if (ideasArray.length < 1) {
     prompt.classList.remove("hidden");
   } 
   if (ideasArray.length >0) {
@@ -302,7 +299,7 @@ function toggleStar(e, index) {
    var starImage = e.target;
    var inactive = "images/star.svg";
    var active = "images/star-active.svg";
-   if (ideasArray[index].starred === true){
+   if (ideasArray[index].starred === true) {
       starImage.src = active;
    } else {
     starImage.src = inactive;
@@ -315,37 +312,32 @@ function saveStar(e) {
   ideasArray[index].starred = !ideasArray[index].starred;
   ideasArray[index].saveToStorage();
   toggleStar(e,index);
-  };
- };
+  }
+ }
 
 function getCardId(e) {
   var ideaId = e.target.closest('.idea-card').getAttribute('data-id');
   return ideasArray.findIndex(function(arrayObj){
-        return arrayObj.id == parseInt(ideaId);
+    return arrayObj.id == parseInt(ideaId);
   });
 }
 
 
-
-//filter swill//
-
 function filterQuality(quality) {
-
   cardSection.innerHTML = '';
   populateCards(quality);
-
-return ideasArray;
+  return ideasArray;
 }
 
 function filterQualityArray(num) {
   var filterArray = ideasArray.filter(function(arrayObject){
     return arrayObject.quality === num;
   })
-    return filterArray
+    return filterArray;
 }
 
 function toggleFilterQuality(e) {
-   e.target.clicked = !e.target.clicked;
+  e.target.clicked = !e.target.clicked;
   filterQualityButton(e, 'Swill', 0);
   filterQualityButton(e, 'Plausible', 1);
   filterQualityButton(e, 'Genius', 2);
@@ -364,19 +356,17 @@ function filterNone(e) {
   if (e.target.clicked === false) {
     e.target.classList.remove('filter-selected');
     cardSection.innerHTML = '';
-    populateCards(ideasArray)
+    populateCards(ideasArray);
   }
 }
 
-function getDomArray(){
+function getDomArray() {
   var domArray = cardSection.querySelectorAll('article');
   var idsArray = Array.from(domArray).map(function(article){
     return parseInt(article.getAttribute('data-id'));
   })
   var searchArray = ideasArray.filter(function(ideaObject) {
-    return idsArray.includes(ideaObject.id)
+    return idsArray.includes(ideaObject.id);
   })
   return searchArray;
 }
-
-
