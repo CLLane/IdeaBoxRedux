@@ -299,6 +299,10 @@ button {
   display: none;
 }
 
+.opacity {
+  opacity: 0.2;
+}
+
 @media screen and (max-width: 900px){
 
   aside {
@@ -365,7 +369,7 @@ button {
   margin-right: -42px;
 }
 
-}
 
 }
+
 

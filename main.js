@@ -51,10 +51,12 @@ function toggleMobileMenu(e) {
     hamburgerButton.clicked = !hamburgerButton.clicked
     changeMobileMenuIcon(hamburgerButton);
     if (hamburgerButton.clicked === true) {
+      main.classList.add('opacity')
       aside.classList.add('unhidden');
       navTitle.classList.add('hidden');
     } else {aside.classList.remove('unhidden');
       navTitle.classList.remove('hidden');
+      main.classList.remove('opacity')
     }
   }
 
@@ -376,3 +378,5 @@ function getDomArray(){
   })
   return searchArray;
 }
+
+
