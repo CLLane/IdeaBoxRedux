@@ -4,6 +4,9 @@ var saveButton = document.querySelector('#save-button');
 var cardSection = document.querySelector('#card-section');
 var searchBar = document.querySelector('#search-input');
 var filterStarredButton = document.querySelector('.filter-starred-button');
+var filterSwillButton = document.querySelector('#swill-filter');
+var filterPlausibleButton = document.querySelector('#plausible-filter');
+var filterGeniusButton = document.querySelector('#genius-filter');
 var prompt = document.querySelector('#no-idea')
 var ideasArray = [];
 
@@ -14,8 +17,11 @@ cardSection.addEventListener('keydown', listenForEnter);
 cardSection.addEventListener('focusout', updateCard);
 cardSection.addEventListener('click', cardSectionHandler);
 saveButton.addEventListener('click', saveButtonHandler);
-filterStarredButton.addEventListener('click', toggleFilterStarred)
-window.addEventListener('load', pageLoadHandler)
+filterStarredButton.addEventListener('click', toggleFilterStarred);
+filterSwillButton.addEventListener('click', toggleFilterQuality);
+filterPlausibleButton.addEventListener('click', toggleFilterQuality);
+filterGeniusButton.addEventListener('click', toggleFilterQuality);
+window.addEventListener('load', pageLoadHandler);
 
 
 function pageLoadHandler() {
@@ -60,9 +66,7 @@ function searchFunction(arrayName) {
   populateCards(newArray);
   }
 
-function filterStarred(){
-
-
+  function filterStarred(){
   if (filterStarredButton.clicked === true) {
     cardSection.innerHTML = '';
     var starred = starredFilterArray();
@@ -89,27 +93,8 @@ function toggleFilterStarred() {
     filterStarredButton.innerText = 'Show Starred Ideas';
     populateCards(ideasArray);
   }
-
   filterStarred();
-
 }
-
-// function filterStarredTest() {
-//   cardSection.innerHTML = '';
-//   if (filterStarredButton.clicked === true) {
-//     filterStarredButton.innerText = 'Show All Cards';
-//     var starredArray = ideasArray.filter(function(arrayObject){
-//     return arrayObject.starred === true
-//   })
-//     populateCards(starredArray)
-//     return starredArray;
-//   }
-//   if (filterStarredButton.clicked === false) {
-
-//     filterStarredButton.innerText = 'Show Starred Ideas';
-//     populateCards(ideasArray)
-//   }
-// }
 
 
 function saveFunction(e) {
@@ -266,4 +251,45 @@ function getCardId(e) {
   return ideasArray.findIndex(function(arrayObj){
         return arrayObj.id == parseInt(ideaId);
   });
+}
+
+
+
+//filter swill//
+
+function filterQuality(quality) {
+
+  cardSection.innerHTML = '';
+  populateCards(quality);
+
+return ideasArray;
+}
+
+function filterQualityArray(num) {
+  var filterArray = ideasArray.filter(function(arrayObject){
+    return arrayObject.quality === num;
+  })
+    return filterArray
+}
+
+function toggleFilterQuality(e) {
+   e.target.clicked = !e.target.clicked;
+  filterQualityButton(e, 'Swill', 0);
+  filterQualityButton(e, 'Plausible', 1);
+  filterQualityButton(e, 'Genius', 2);
+  filterNone(e);
+}
+
+function filterQualityButton(e, type, index) {
+  if (e.target.clicked === true && e.target.innerText === type) {
+    var array = filterQualityArray(index);
+    filterQuality(array);
+}
+}
+
+function filterNone(e) {
+  if (e.target.clicked === false) {
+    cardSection.innerHTML = '';
+    populateCards(ideasArray)
+  }
 }
