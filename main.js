@@ -15,6 +15,7 @@ var aside = document.querySelector('aside');
 var navTitle = document.querySelector('.desktop-nav-title');
 var showMoreButton = document.querySelector('.show-more-button');
 var hamburgerButton = document.querySelector('.hamburger-button');
+var main = document.querySelector('main')
 
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
@@ -28,10 +29,10 @@ filterSwillButton.addEventListener('click', toggleFilterQuality);
 filterPlausibleButton.addEventListener('click', toggleFilterQuality);
 filterGeniusButton.addEventListener('click', toggleFilterQuality);
 showMoreButton.addEventListener('click', showMoreButtonToggle)
+hamburgerButton.addEventListener('click', toggleMobileMenu)
 window.addEventListener('load', pageLoadHandler);
 
 
-hamburgerButton.addEventListener('click', toggleMobileMenu)
 
 function showMoreButtonToggle() {
   showMoreButton.clicked = !showMoreButton.clicked;
@@ -53,7 +54,7 @@ function toggleMobileMenu(e) {
       aside.classList.add('unhidden');
       navTitle.classList.add('hidden');
     } else {aside.classList.remove('unhidden');
-      navTitle.classList.remove('hidden')
+      navTitle.classList.remove('hidden');
     }
   }
 
@@ -71,6 +72,7 @@ function pageLoadHandler() {
   instantiateIdeas();
   pageLoadCardPopulation();
   noIdeasPrompt();
+  showMoreButton.clicked === false;
 }
 
 function pageLoadCardPopulation() {
@@ -98,29 +100,40 @@ function saveButtonHandler(e) {
 }
 
 function searchFunction(arrayName) {
-   if (filterStarredButton.clicked === true){
-    starredSearch();
-   } else {
-  var searchInput = searchBar.value
-     cardSection.innerHTML = '';
-    var newArray = ideasArray.filter(function(arrayObject){
-  return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
-  })
+  var searchArray = getDomArray();
+  cardSection.innerHTML = '';
+  var newArray = generateSearchResultsArray(searchArray, searchBar.value);
   populateCards(newArray);
+  if (searchBar.value === '') {
+    repopulateAfterEmptySearch()
+  }
 }
-  }
-  
-  function starredSearch () {
-    var starredArray = starredFilterArray();
-    var searchInput = searchBar.value
-    cardSection.innerHTML = '';
-    var newArray = starredArray.filter(function(arrayObject){
-      return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
-    })
-    populateCards(newArray);
-  }
 
-  function filterStarred(){
+function repopulateAfterEmptySearch(){
+  populateCards(ideasArray)
+    resetFilterButtons()
+}
+
+function generateSearchResultsArray(array, searchWords){
+  var searchResultsArray = array.filter(function(arrayObject){
+  return arrayObject.title.includes(searchWords) || arrayObject.body.includes(searchWords)
+  })
+  return searchResultsArray
+}
+
+function resetFilterButtons(){
+  toggleFilterStarred();
+  toggleButtons(filterSwillButton);
+  toggleButtons(filterPlausibleButton);
+  toggleButtons(filterGeniusButton);
+}
+
+function toggleButtons(button) {
+  button.classList.remove('filter-selected')
+  button.clicked != button.clicked
+}
+
+function filterStarred(){
   if (filterStarredButton.clicked === true) {
     cardSection.innerHTML = '';
     var starred = starredFilterArray();
@@ -347,4 +360,15 @@ function filterNone(e) {
     cardSection.innerHTML = '';
     populateCards(ideasArray)
   }
+}
+
+function getDomArray(){
+  var domArray = cardSection.querySelectorAll('article');
+  var idsArray = Array.from(domArray).map(function(article){
+    return parseInt(article.getAttribute('data-id'));
+  })
+  var searchArray = ideasArray.filter(function(ideaObject) {
+    return idsArray.includes(ideaObject.id)
+  })
+  return searchArray;
 }
