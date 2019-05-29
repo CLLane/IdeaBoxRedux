@@ -258,6 +258,14 @@ button {
   height: 30px;
 }
 
+.filter-selected {
+  font-weight: 700;
+  border-left: 10px solid #F58E72;
+  margin-left: -20px;
+  background-color: #D14119;
+  padding-left: 10px;
+}
+
 .no-idea{
   display: flex;
   font-size: 40px;
