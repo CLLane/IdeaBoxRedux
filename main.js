@@ -76,8 +76,11 @@ function pageLoadHandler() {
 }
 
 function pageLoadCardPopulation() {
+  var begin = ideasArray.length - 10
+  var end = begin + 11;
+  var tenIdeasArray = ideasArray.slice(begin, end)
   for (var i = 0; i < 10; i++) {
-    generateCard(ideasArray[i]);
+    generateCard(tenIdeasArray[i]);
   }
 }
 
@@ -108,6 +111,7 @@ function searchFunction(arrayName) {
     repopulateAfterEmptySearch()
   }
 }
+
 
 function repopulateAfterEmptySearch(){
   populateCards(ideasArray)
