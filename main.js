@@ -30,6 +30,7 @@ filterGeniusButton.addEventListener('click', toggleFilterQuality);
 showMoreButton.addEventListener('click', showMoreButtonToggle)
 window.addEventListener('load', pageLoadHandler);
 
+
 hamburgerButton.addEventListener('click', toggleMobileMenu)
 
 function showMoreButtonToggle() {
@@ -43,6 +44,7 @@ function showMoreButtonToggle() {
     showMoreButton.innerText = 'Show More';
   }
 }
+
 
 function toggleMobileMenu(e) {
     hamburgerButton.clicked = !hamburgerButton.clicked
@@ -333,13 +335,15 @@ function toggleFilterQuality(e) {
 
 function filterQualityButton(e, type, index) {
   if (e.target.clicked === true && e.target.innerText === type) {
+    e.target.classList.add('filter-selected');
     var array = filterQualityArray(index);
     filterQuality(array);
-}
+  }
 }
 
 function filterNone(e) {
   if (e.target.clicked === false) {
+    e.target.classList.remove('filter-selected');
     cardSection.innerHTML = '';
     populateCards(ideasArray)
   }
