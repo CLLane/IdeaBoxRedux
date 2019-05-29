@@ -28,11 +28,11 @@ filterSwillButton.addEventListener('click', toggleFilterQuality);
 filterPlausibleButton.addEventListener('click', toggleFilterQuality);
 filterGeniusButton.addEventListener('click', toggleFilterQuality);
 window.addEventListener('load', pageLoadHandler);
-
-body.addEventListener('click', toggleMobileMenu)
+// 
+var hamburgerButton = document.querySelector('.hamburger-button');
+hamburgerButton.addEventListener('click', toggleMobileMenu)
 
 function toggleMobileMenu(e) {
-    var hamburgerButton = document.querySelector('.hamburger-button');
     hamburgerButton.clicked = !hamburgerButton.clicked
     changeMobileMenuIcon(hamburgerButton);
     if (hamburgerButton.clicked === true) {
@@ -311,13 +311,15 @@ function toggleFilterQuality(e) {
 
 function filterQualityButton(e, type, index) {
   if (e.target.clicked === true && e.target.innerText === type) {
+    e.target.classList.add('filter-selected');
     var array = filterQualityArray(index);
     filterQuality(array);
-}
+  }
 }
 
 function filterNone(e) {
   if (e.target.clicked === false) {
+    e.target.classList.remove('filter-selected');
     cardSection.innerHTML = '';
     populateCards(ideasArray)
   }
