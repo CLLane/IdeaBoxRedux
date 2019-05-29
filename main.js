@@ -101,16 +101,24 @@ function saveButtonHandler(e) {
 
 function searchFunction(arrayName) {
   var searchArray = getDomArray();
-  var searchInput = searchBar.value
   cardSection.innerHTML = '';
-  var newArray = searchArray.filter(function(arrayObject){
-  return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
-  })
+  var newArray = generateSearchResultsArray(searchArray, searchBar.value);
   populateCards(newArray);
-  if (searchInput === '') {
-    populateCards(ideasArray)
-    resetFilterButtons()
+  if (searchBar.value === '') {
+    repopulateAfterEmptySearch()
   }
+}
+
+function repopulateAfterEmptySearch(){
+  populateCards(ideasArray)
+    resetFilterButtons()
+}
+
+function generateSearchResultsArray(array, searchWords){
+  var searchResultsArray = array.filter(function(arrayObject){
+  return arrayObject.title.includes(searchWords) || arrayObject.body.includes(searchWords)
+  })
+  return searchResultsArray
 }
 
 function resetFilterButtons(){
