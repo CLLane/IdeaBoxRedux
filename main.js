@@ -9,6 +9,12 @@ var filterPlausibleButton = document.querySelector('#plausible-filter');
 var filterGeniusButton = document.querySelector('#genius-filter');
 var prompt = document.querySelector('#no-idea')
 var ideasArray = [];
+var prompt = document.querySelector('#no-idea');
+var body = document.querySelector('body');
+var aside = document.querySelector('aside');
+var navTitle = document.querySelector('.desktop-nav-title');
+
+
 
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
@@ -23,6 +29,29 @@ filterPlausibleButton.addEventListener('click', toggleFilterQuality);
 filterGeniusButton.addEventListener('click', toggleFilterQuality);
 window.addEventListener('load', pageLoadHandler);
 
+body.addEventListener('click', toggleMobileMenu)
+
+function toggleMobileMenu(e) {
+    var hamburgerButton = document.querySelector('.hamburger-button');
+    hamburgerButton.clicked = !hamburgerButton.clicked
+    changeMobileMenuIcon(hamburgerButton);
+    if (hamburgerButton.clicked === true) {
+      aside.classList.add('unhidden');
+      navTitle.classList.add('hidden');
+    } else {aside.classList.remove('unhidden');
+      navTitle.classList.remove('hidden')
+    }
+  }
+
+function changeMobileMenuIcon (button) {
+  if (button.clicked === true) {
+      var mobileMenu = document.querySelector('.mobile-nav')
+      button.src = 'images/menu-close.svg';
+    }
+    if (button.clicked === false) {
+      button.src = 'images/menu.svg';
+    }
+}
 
 function pageLoadHandler() {
   instantiateIdeas();
@@ -89,7 +118,7 @@ function toggleFilterStarred() {
     filterStarredButton.innerText = 'Show All Cards'
   } 
   if (filterStarredButton.clicked === false){
-     cardSection.innerHTML = '';
+    cardSection.innerHTML = '';
     filterStarredButton.innerText = 'Show Starred Ideas';
     populateCards(ideasArray);
   }
