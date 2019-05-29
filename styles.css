@@ -13,6 +13,7 @@ body {
   font-family: "Open Sans", sans-serif;
   margin: 0px;
   width: 100%;
+  min-width: 320px;
 
 }
 
@@ -278,6 +279,14 @@ button {
   display: none;
 }
 
+.unhidden {
+  display: block;
+}
+
+.mobile-nav {
+  display: none;
+}
+
 @media screen and (max-width: 900px){
 
   aside {
@@ -301,6 +310,12 @@ button {
     width: 95%;
   }
 
+  aside {
+      background-color: #1F1F3D;
+      width: 100%;
+      display: none;
+  }
+
   body {
   flex-direction: column;
   }
@@ -308,5 +323,37 @@ button {
   main {
     width: 100%
   }
+
+  .input-form {
+    width: 90%;
+    max-width: 400px;
+}
+
+.search-input-container {
+    width: 90%;
+    max-width: 400px;
+
+}
+.mobile-nav {
+  color: #FFFFFF;
+  display: block;
+  height: 60px;
+  background-color: #1F1F3D;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-nav-title {
+  margin: 15px auto 0 auto;
+  padding-left: 0;
+}
+.hamburger-button {
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-right: -42px;
+}
+
+}
+
 }
 
