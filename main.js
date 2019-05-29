@@ -13,8 +13,8 @@ var prompt = document.querySelector('#no-idea');
 var body = document.querySelector('body');
 var aside = document.querySelector('aside');
 var navTitle = document.querySelector('.desktop-nav-title');
-
-
+var showMoreButton = document.querySelector('.show-more-button');
+var hamburgerButton = document.querySelector('.hamburger-button');
 
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
@@ -27,12 +27,24 @@ filterStarredButton.addEventListener('click', toggleFilterStarred);
 filterSwillButton.addEventListener('click', toggleFilterQuality);
 filterPlausibleButton.addEventListener('click', toggleFilterQuality);
 filterGeniusButton.addEventListener('click', toggleFilterQuality);
+showMoreButton.addEventListener('click', showMoreButtonToggle)
 window.addEventListener('load', pageLoadHandler);
 
-body.addEventListener('click', toggleMobileMenu)
+hamburgerButton.addEventListener('click', toggleMobileMenu)
+
+function showMoreButtonToggle() {
+  showMoreButton.clicked = !showMoreButton.clicked;
+  cardSection.innerHTML = '';
+  if (showMoreButton.clicked === true) {
+    showMoreButton.innerText = 'Show Less';
+    populateCards(ideasArray);
+  } else {
+    pageLoadCardPopulation();
+    showMoreButton.innerText = 'Show More';
+  }
+}
 
 function toggleMobileMenu(e) {
-    var hamburgerButton = document.querySelector('.hamburger-button');
     hamburgerButton.clicked = !hamburgerButton.clicked
     changeMobileMenuIcon(hamburgerButton);
     if (hamburgerButton.clicked === true) {
@@ -55,8 +67,20 @@ function changeMobileMenuIcon (button) {
 
 function pageLoadHandler() {
   instantiateIdeas();
-  populateCards(ideasArray);
+  pageLoadCardPopulation();
   noIdeasPrompt();
+}
+
+function pageLoadCardPopulation() {
+  for (var i = 0; i < 10; i++) {
+    generateCard(ideasArray[i]);
+  }
+}
+
+function showMoreCards() {
+  for (var i = 10; i < ideasArray.length; i++) {
+    generateCard(ideasArray[i])
+  }
 }
 
 function cardSectionHandler(e) {
@@ -72,7 +96,6 @@ function saveButtonHandler(e) {
 }
 
 function searchFunction(arrayName) {
-
    if (filterStarredButton.clicked === true){
     starredSearch();
    } else {
@@ -86,13 +109,13 @@ function searchFunction(arrayName) {
   }
   
   function starredSearch () {
-     var starredArray = starredFilterArray();
+    var starredArray = starredFilterArray();
     var searchInput = searchBar.value
-     cardSection.innerHTML = '';
+    cardSection.innerHTML = '';
     var newArray = starredArray.filter(function(arrayObject){
-  return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
-  })
-  populateCards(newArray);
+      return arrayObject.title.includes(searchInput) || arrayObject.body.includes(searchInput)
+    })
+    populateCards(newArray);
   }
 
   function filterStarred(){
@@ -124,7 +147,6 @@ function toggleFilterStarred() {
   }
   filterStarred();
 }
-
 
 function saveFunction(e) {
   e.preventDefault();

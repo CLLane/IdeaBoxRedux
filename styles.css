@@ -100,6 +100,10 @@ button {
   font-family: 'Open Sans', sans-serif;
 }
 
+.new-qualities-form{
+  border-bottom: 1px solid #5356A4;
+}
+
 .input-section {
   background-color: #A9AAD2;
   display: flex;
