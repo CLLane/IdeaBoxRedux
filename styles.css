@@ -204,6 +204,12 @@ button {
   justify-content: space-between;
   margin-bottom: 30px;
   width: 30%;
+
+}
+
+.idea-title, .idea-body{
+  padding: 10px;
+  margin-top: 0px;
 }
 
 .card-top {
