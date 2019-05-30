@@ -105,7 +105,7 @@ function saveButtonHandler(e) {
 }
 
 function searchFunction(arrayName) {
-  if (filterStarredButton.clicked === true) {
+  if (filterStarredButton.clicked === true || filterSwillButton.clicked === true || filterPlausibleButton.clicked === true || filterGeniusButton.clicked === true) {
   var searchArray = getDomArray();
   } else {searchArray = ideasArray}
   cardSection.innerHTML = '';
@@ -130,7 +130,6 @@ function generateSearchResultsArray(array, searchWords){
 }
 
 function resetFilterButtons(){
-  
   toggleButtons(filterStarredButton);
   changeStarredFilterButtonText()
   toggleButtons(filterSwillButton);
