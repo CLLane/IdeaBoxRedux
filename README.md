@@ -25,6 +25,6 @@ Users can create, favorite, rate, and edit idea cards that persist in local stor
 
 ### Mobile Layout
 
-![Lane/DelValle Mobile Layout Menu Closed](https://i.imgur.com/PfMjuFs.png)
+![Lane/DelValle Mobile Layout Menu Closed](https://i.imgur.com/5ZhJyW8.png)
 
-![Lane/DelValle Mobile Layout Menu Open](https://i.imgur.com/2Wy7uvJ.png)
+![Lane/DelValle Mobile Layout Menu Open](https://i.imgur.com/xRPSMg3.png)
