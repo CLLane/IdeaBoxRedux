@@ -180,7 +180,7 @@ function changeStarredFilterButtonText() {
   } 
   if (filterStarredButton.clicked === false){
     filterStarredButton.innerText = 'Show Starred Ideas';
-}
+  }
 }
 
 function saveFunction(e) {
