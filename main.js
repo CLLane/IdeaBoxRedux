@@ -105,16 +105,19 @@ function saveButtonHandler(e) {
 }
 
 function searchFunction(arrayName) {
+  if (filterStarredButton.clicked === true) {
   var searchArray = getDomArray();
+  } else {searchArray = ideasArray}
   cardSection.innerHTML = '';
   var newArray = generateSearchResultsArray(searchArray, searchBar.value);
   populateCards(newArray);
-  if (searchBar.value === '') {
+  if (searchBar.value === '' || null) {
     repopulateAfterEmptySearch();
   }
 }
 
 function repopulateAfterEmptySearch(){
+  cardSection.innerText = '';
   populateCards(ideasArray);
   resetFilterButtons();
 }
@@ -127,7 +130,9 @@ function generateSearchResultsArray(array, searchWords){
 }
 
 function resetFilterButtons(){
-  toggleFilterStarred();
+  
+  toggleButtons(filterStarredButton);
+  changeStarredFilterButtonText()
   toggleButtons(filterSwillButton);
   toggleButtons(filterPlausibleButton);
   toggleButtons(filterGeniusButton);
@@ -135,7 +140,7 @@ function resetFilterButtons(){
 
 function toggleButtons(button) {
   button.classList.remove('filter-selected');
-  button.clicked != button.clicked;
+  button.clicked = false;
 }
 
 function filterStarred() {
@@ -155,16 +160,27 @@ function starredFilterArray() {
 }
 
 function toggleFilterStarred() {
+  toggleFilterStarredClickedStatus()
+  if (filterStarredButton.clicked === false){
+    cardSection.innerHTML = '';
+    populateCards(ideasArray);
+  } else {
+    filterStarred();
+  }
+  changeStarredFilterButtonText();
+}
+
+function toggleFilterStarredClickedStatus() {
   filterStarredButton.clicked = !filterStarredButton.clicked;
-  if (filterStarredButton.clicked === true) {
+}
+
+function changeStarredFilterButtonText() {
+    if (filterStarredButton.clicked === true) {
     filterStarredButton.innerText = 'Show All Cards';
   } 
   if (filterStarredButton.clicked === false){
-    cardSection.innerHTML = '';
     filterStarredButton.innerText = 'Show Starred Ideas';
-    populateCards(ideasArray);
-  }
-  filterStarred();
+}
 }
 
 function saveFunction(e) {
